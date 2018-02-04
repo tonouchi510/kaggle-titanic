@@ -1,6 +1,6 @@
 # Kaggle Titanic
 
-チュートリアル実装記録
+チュートリアル実装記録(個人的学習用)
 
 ### データセット
 
@@ -19,6 +19,7 @@
 
 
 ### モデル：グリッドサーチで選択
+- 精度は78%程度
 - Best parameters: {'classifier': MLPClassifier(activation='relu', alpha=0.1, batch_size='auto', beta_1=0.9,
        beta_2=0.999, early_stopping=False, epsilon=1e-08,
        hidden_layer_sizes=[32], learning_rate='constant',

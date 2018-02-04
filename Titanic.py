@@ -40,11 +40,9 @@ def preprocessing(train, test):
         x.loc[x["Age"] <= 6, "Age"] = 0
         x.loc[(x["Age"] > 6) & (x["Age"] <= 12), "Age"] = 1
         x.loc[(x["Age"] > 12) & (x["Age"] <= 20), "Age"] = 2
-        x.loc[(x["Age"] > 20) & (x["Age"] <= 60), "Age"] = 3
-        x.loc[x["Age"] > 60, "Age"] = 4
-    print("Age count:")
-    print(collections.Counter(train["Age"]))
-
+        x.loc[(x["Age"] > 20) & (x["Age"] <= 50), "Age"] = 3
+        x.loc[(x["Age"] > 50) & (x["Age"] <= 60), "Age"] = 4
+        x.loc[x["Age"] > 60, "Age"] = 5
 
     # Fare
     train["Fare"].fillna(train.groupby("Pclass")["Fare"].transform("median"), inplace=True)
@@ -55,8 +53,6 @@ def preprocessing(train, test):
         x.loc[(x["Fare"] > 50) & (x["Fare"] <= 100), "Fare"] = 2
         x.loc[(x["Fare"] > 100) & (x["Fare"] <= 200), "Fare"] = 3
         x.loc[x["Fare"] > 200, "Fare"] = 4
-    print("Fare count:")
-    print(collections.Counter(train["Fare"]))
 
     # Cabin
     for x in dataset:
@@ -81,11 +77,14 @@ def preprocessing(train, test):
     test.drop(drop_features, axis=1, inplace=True)
 
 
-
-
-def analyze():
+def analyze(X, Y):
     # 重要特徴量を可視化する
     # ロジスティック回帰等(L1正則化)、決定木など、特徴量の重要度を見ることができるアルゴリズムを利用
+    tree = DecisionTreeClassifier(max_depth=4)
+    tree.fit(X, Y)
+    print(X.head(10))
+    print("DTree_Accuracy: {}".format(tree.score(X, Y)))
+    print("DTree_Feature_importances:\n{}".format(tree.feature_importances_))
     param_grid0 = [
         {'classifier': [LogisticRegression()], 'preprocessing': [StandardScaler(), None],
          'classifier__C': [0.001, 0.01, 0.1, 1, 10, 100]},
@@ -105,6 +104,8 @@ def main():
 
     '''データセット前処理(欠測値の補完・特徴選択・数値化)'''
     preprocessing(X_train, X_test)
+
+    analyze(X_train, Y_train)
 
     '''グリッドサーチによる最良モデル選択'''
     pipe = Pipeline([('preprocessing', StandardScaler()), ('classifier', SVC())])
