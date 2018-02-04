@@ -85,6 +85,7 @@ def analyze(X, Y):
     print(X.head(10))
     print("DTree_Accuracy: {}".format(tree.score(X, Y)))
     print("DTree_Feature_importances:\n{}".format(tree.feature_importances_))
+
     param_grid0 = [
         {'classifier': [LogisticRegression()], 'preprocessing': [StandardScaler(), None],
          'classifier__C': [0.001, 0.01, 0.1, 1, 10, 100]},
