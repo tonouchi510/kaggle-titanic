@@ -1,6 +1,6 @@
 # Kaggle Titanic
 
-チュートリアル実装記録(途中)
+チュートリアル実装記録
 
 ### データセット
 
@@ -18,8 +18,7 @@
 - 特徴量に非線形変換を施す→これも線形モデル・NNの強化のため
 
 
-### モデル：グリッドサーチによる選択
-- SVM，MLPで精度89％
+### モデル：グリッドサーチで選択
 - Best parameters: {'classifier': MLPClassifier(activation='relu', alpha=0.1, batch_size='auto', beta_1=0.9,
        beta_2=0.999, early_stopping=False, epsilon=1e-08,
        hidden_layer_sizes=[32], learning_rate='constant',
@@ -28,4 +27,3 @@
        shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
        verbose=False, warm_start=False), 'classifier__activation': 'relu', 'classifier__alpha': 0.1, 'classifier__hidden_layer_sizes': [32], 'classifier__solver': 'adam', 'preprocessing': StandardScaler(copy=True, with_mean=True, with_std=True)}
 Best cross-validation accuracy: 0.83
-Test set score: 0.89
